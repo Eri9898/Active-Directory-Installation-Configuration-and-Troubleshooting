@@ -19,7 +19,7 @@ This tutorial outlines the installation of Active Directory on a windows server.
 - Windows 10</b> (21H2)
 
 
-<h2>Installation Steps</h2>
+<h2>Create Resources</h2>
 
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -88,7 +88,9 @@ Login to Client-1 with Remote Desktop, open command line and ping DC-1’s priva
  <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says time out was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1 settings!
 Type in cntrl c to make it stop. Now that we are done setting up the resources necassary for Active Directory now we can start installing it!
-
+</p>
+<br />
+<h1>Active Directory Installation</h1>
 </p>
 <br />
 8. Next install PHP (php-7.3.8-nts-Win32-VC15-x86.zip) https://drive.google.com/file/d/1snNMtLdCOpMtkCyD4mvl9yOOmvVIp9fP/view?usp=share_link
