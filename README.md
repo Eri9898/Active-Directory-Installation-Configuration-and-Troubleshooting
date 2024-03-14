@@ -27,36 +27,68 @@ This tutorial outlines the installation of Active Directory on a windows server.
 1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM "Client-1" has the same one), choose window server 2022 and 2 CPUs. Create your Username and Password, save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
 
 </p>
+<br />
+
+</p>
+<br />
+
+</p>
 <p>
 
 </p>
 <br />
 
 <p>
-<img src="https://github.com/Eri9898/osticket-prereqs/assets/143845247/261ff49c-4e4f-494c-8d2b-b1eefb5ea4b4.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/R2Nwn9Z.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-2. Connect to the VM via Remote Desktop and within the VM enable IIS. Go to the control panel, then click Programs, control Panel>programs>Programs & Features> Windows Features On/Off, then scroll down and check the IIS box. Make sure the last 2 boxes are checked.
+ <img src="https://imgur.com/C6Z85az.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+2. Set Domain Controller’s NIC Private IP address to be static 
+Go to the networking tab>blue # next to the NIC interface>IP configurations>IP address> Under assignment change the dynamic to static! Then click save on the upper left.
+The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the Domain will experience trouble since they would be trying to connect to the DC’s prior IP!
+
+
 </p>
 <br />
-3. Next you must enable CGI and common HTTP Features. On the same windows feaures list scroll to world wide services>App Development> CGI and check the box. Scroll further down the list, check  and expand HTTP Features.  Make sure all the boxes within HHTP features are turned on. 
-*IIS needs CGI and HTTP features for dynamic content such as a ticketing system.
+
 </p>
 <br />
-4. Make sure IIS Managment Console is checked. Access it by scrolling back up to IIS on the same windows features window,  clicking on IIS>Web Management Tools>IIS Mangment Console
+
 </p>
+<br />
+ <img src="https://imgur.com/ZJL87cs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in Step 1. Include the same region location. Use the same username and pw if you want (for this lab, not a good practice for IRL). Click next, and go to the networking tab. In the virtual network make sure it is connected to AD Lab. Then create!
+</p>
+<br />
+4. Click on ea VM, then check under VirtualNetwork/Subnet to see if connected to AD-lab
+</p>
+<br />
+5. Ensure Connectivity between the client and Domain Controller
+Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail cuz the firewall on DC is blocking traffic!
+</p>
+<br />
+ </p>
 <br />
 </p>
 <br />
-<img src="https://imgur.com/GwE2WGF.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-5. Hit Ok and the computer should install IIS. On the web browser look up the local host 127.0.0.1 and the webpage should load. (it may not load on microsoft edge, if that is the case then download google chrome or another browser. Then search up the local host on there.)
+ <img src="https://imgur.com/nTbgxtT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ </p>
+<br />
+ <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ 
+6. Login to the Domain Controller and enable ICMPv4 in on the local windows Firewall, which is the protocol Ping uses. So RDP to DC’s public IP address, login with the username and password you made. Click start menu>server manager. In search bar at the bottom type firewall and click on windows defendant firewal click on inbound rules> protocol. Scroll down till you find ICMPv4, right click to enable all of the ones w that protocol
+
 </p>
 <br />
-6. Next you must install a PHP Manager for IIS (PHPManagerForIIS_V1.5.0.msi). Download the file then Open the file to install it. https://drive.google.com/file/d/1RHsNd4eWIOwaNpj3JW4vzzmzNUH86wY_/view?usp=share_link
-</p>
+ </p>
 <br />
-7. Follow the same procedure for downloading a rewrite module (rewrite_amd64_en-US.msi). 
-https://drive.google.com/file/d/1tIK9GZBKj1JyUP87eewxgdNqn9pZmVmY/view?usp=share_link
+ <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says time out was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1 settings!
+Type in cntrl c to make it stop. Now that we are done setting up the resources necassary for Active Directory now we can start installing it!
+
 </p>
 <br />
 8. Next install PHP (php-7.3.8-nts-Win32-VC15-x86.zip) https://drive.google.com/file/d/1snNMtLdCOpMtkCyD4mvl9yOOmvVIp9fP/view?usp=share_link
