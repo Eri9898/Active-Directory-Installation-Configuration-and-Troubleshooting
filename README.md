@@ -24,7 +24,7 @@ This tutorial outlines the installation of Active Directory on a windows server.
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM "Client-1" has the same one), choose window server 2022 and 2 CPUs. Create your Username and Password, save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
+1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM "Client-1" has the same one), choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
 
 </p>
 <br />
@@ -60,7 +60,7 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
  <img src="https://imgur.com/ZJL87cs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in Step 1. Include the same region location. Use the same username and pw if you want (for this lab, not a good practice for IRL). Click next, and go to the networking tab. In the virtual network make sure it is connected to AD Lab. Then create!
+3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in Step 1. Include the same region location. Use the same username (LabUser) and password if you want (for this lab, not a good practice for IRL). Click next, and go to the networking tab. In the virtual network make sure it is connected to AD Lab. Then create!
 </p>
 <br />
 4. Click on ea VM, then check under VirtualNetwork/Subnet to see if connected to AD-lab
@@ -93,92 +93,87 @@ Type in cntrl c to make it stop. Now that we are done setting up the resources n
 <h1>Active Directory Installation</h1>
 </p>
 <br />
-8. Next install PHP (php-7.3.8-nts-Win32-VC15-x86.zip) https://drive.google.com/file/d/1snNMtLdCOpMtkCyD4mvl9yOOmvVIp9fP/view?usp=share_link
+8. Login to DC-1 and install Active Directory Domain Services. Go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
+The server has the necessary software installed but it is still not a DC yet!
+
 
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/yA0dnbM.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-9. Create a new file named "PHP" for PHP on the local harddrive., unzip the PHP contents into C:/PHP
+9. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC".  On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
 </p>
 <br />
-10. Next download Microsoft Visual C + + (VC_redist.x86.exe.) 
-https://drive.google.com/file/d/1s1OsGF3-ioO0_9LYizPRiVuIkb3lFJgH/view?usp=share_link
+10.Restart and then log back into DC-1 as user: mydomain.com\username 
+To login you must add “MyDomain.com/” to the username so that you login as a DC with your user.
+
 </p>
 <br />
-11.  Next Install a database ((mysql-5.5.62-win32.msi) https://drive.google.com/file/d/1_OWh9p7VQLcrB0q_V7qT8yHl0xo5gv7z/view?usp=share_link
-Select the typical install, click finish to launch the configuariation wizard. Within that check standard configuaration and install.
-Create your credentials for the database, your username will automatically be “root”. So create your password.  Do not forget it! Then execute.
+<h1>Create an Admin and Normal User Account in AD </h1>
+11. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES”
+Within the server menu click tools at the upper right corner>“Active Directory Users and Computers”. On mydomain.com right click>new>Organizational Units, click that. And name it “_Employees”
+
 </p>
 <br />
-12. Next search IIS on the windows start menu, right click and open as admin.
+12. Create a new OU named “_ADMINS”
+On mydomian.com right click>new>Organizational Units. And name it _ADMINS. Refresh page and both should move up the list.
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/s5jUSDP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-13. Open the PHP manager that was installed earlier. Click register and it will ask for a location, click the three dots. Locate file C:\PHP\CGI and select it.
+13. Create a new employee named “Jane Doe” with the username of “jane_admin”
+Click on the admins folder then on the empty space off to the right, right click>new>user. Name user “Jane Doe”. For the username type “Jane_Admin” click next and create a password. 
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/5AHq3tk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-14. Refresh IIS AFTER selecting the file.
- Then download OSTicket (osTicket v 1.12.8) onto the machine. 
-Open the OSTicket file, extract and copy the zipped file "Upload" within it. Copy it into c:\inetpub\wwwroot
+14. Add jane_admin to the “Domain Admins” Security Group
+The user is not an admin yet, in order for that to happen you must add the user to the DA security group. So right click the user>properties>member of. Click add  and within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
 </p>
 <br />
-15. Within c:\inetpub\wwwroot rename the upload file to "OSTicket"
+15. Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin”
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/fMTpCKA.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-16. Reload IIS again and in the upper left corner go click on Ticket\YourName> Sites> Default> osTicket. On the right side of the screen click “Browse *:80” and the welcome webpage to IIS should load. It says “Thanks for choosing osTicket!”
+16. Use jane_admin as your admin account from now on
 </p>
 <br />
-17. On that same page, Ticket\YourName> Sites> Default> osTicket.  Double-click PHP Manager within OSticket. Click “Enable or disable an extension”
-Enable: php_imap.dll
-Enable: php_intl.dll
-Enable: php_opcache.dll
-Then Refresh osTicket Browser
+17A. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in DC. Also, Client-1 is connected to the automatic DNS system hosted by VMWare so you must make it connect to our DC’s DNS. If you try to find mydomain.com through VMware it won't be able to find the right one. In client 1 if you type “IPConfig/All” in cmd line right now on the DNS line you’ll see it does not have the I.P address of your DC.
 </p>
 <br />
-18. Rename ost-sampleconfig.php to ost-config.php
-It is located in
-C:\inetpub\wwwroot\osTicket\include\ost-sampleconfig.php
+17B. B) FInd out what DC-1’s  private IP is. So click on DC under the VM list within Azure Portal and then go to the networking tab. Copy the NIC Private IP address.
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/t2GHOsE.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-19. Next you will assign permissions to ost-config.php.  Right click to properties and go to security. Click advanced then disable inheritance, click remove all permissions. Next click add, click select principle and type everyone and click ok. Check box “full control” and apply.
+17C. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page.
 </p>
 <br />
-20. Instal HeidiSQL so that you can connect to MySQL. https://docs.google.com/document/d/1WovrX2DaS9xkfaSr4LXyB4YnnWpXIgPCMMbbfgHmGVw/edit
-Open the file and install it. The app shoud open after install. On the bottom left click new, then enter username:Root then password:
-Create a new session, enter username and passowrd.
+18. From the Azure Portal, restart Client-1
+You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, go to system settings, and click on “Rename This PC” then underneath “member of” click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
+
 </p>
 <br />
-21. Create a new session and connect to it by clicking open.  
+<h1>Set Up Desktop for Non Admins on Client 1</h1>
+19.  
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/Tcf1nhi.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-22. In Heidi right click unnamed in upper left corner, then click create new then database.then name it osTIcket then say ok
+20. 
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-23. Continue Setting up osTicket in the ISS webpage, click next. Next fill out the system settings and in database settings enter your MY SQL 
-MySQL Table Prefix: ost-config.php
-MySQL Database: osTicket
-MySQL Username: root
-MySQL Password: ***** whatever you created
-Click “Install Now!”
+21. 
 </p>
 <br />
-24. OS TIcket should then load up with a welcome screen. Congratulations you just installed os Ticket! c: 
+22. 
