@@ -93,6 +93,12 @@ Type in cntrl c to make it stop. Now that we are done setting up the resources n
 <h1>Active Directory Installation</h1>
 </p>
 <br />
+ </p>
+<br />
+ <img src="https://imgur.com/4HXds4o.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+  </p>
+<br />
+ <img src="https://imgur.com/ynybIMT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 8. Login to DC-1 and install Active Directory Domain Services. Go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
 The server has the necessary software installed but it is still not a DC yet!
 
@@ -101,10 +107,20 @@ The server has the necessary software installed but it is still not a DC yet!
 <br />
 </p>
 <br />
-<img src="https://imgur.com/yA0dnbM.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/U3itFYu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+<img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 9. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC".  On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
 </p>
 <br />
+
+</p>
+<br />
+<img src="https://imgur.com/5EusubC.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+<img src="https://imgur.com/0lIWNs2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 10.Restart and then log back into DC-1 as user: mydomain.com\username 
 To login you must add “MyDomain.com/” to the username so that you login as a DC with your user.
 
