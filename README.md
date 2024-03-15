@@ -189,8 +189,6 @@ The user is not an admin yet, in order for that to happen you must add the user 
 <br />
 </p>
 <br />
-<img src=".https://imgur.com/ledXS6Opng" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17C. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to 
 </p>
 <br />
 <img src="https://imgur.com/iUomZ6a.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
