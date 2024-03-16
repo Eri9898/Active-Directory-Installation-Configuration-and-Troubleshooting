@@ -203,7 +203,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 <br />
 </p>
 <br />
-<img src="https://imgur.com/Tcf1nhi.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/6VW8VkD.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
 20. 
 </p>
 <br />
