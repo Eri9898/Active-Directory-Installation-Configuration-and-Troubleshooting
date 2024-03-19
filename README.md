@@ -58,7 +58,7 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
 </p>
 <br />
 5. Ensure Connectivity between the Client and Domain Controller
-Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on DC is blocking traffic!
+Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic!
 </p>
 <br />
 </p>
@@ -82,8 +82,8 @@ Login to Client-1 with Remote Desktop, open command line and ping DC-1’s priva
 <p>
  <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says "time out" was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1 settings!
-Type in ctrl+c to make it stop. Now that we are done setting up the resources necassary for Active Directory now we can start installing it!
+7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says "time out" was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1's settings!
+Type in ctrl+c to make it stop. Now that we are done setting up the resources necassary for Active Directory, we can start installing the Active Directory software onto the Domain Controller.
 </p>
 <br />
 <h1>Active Directory Installation</h1>
@@ -93,7 +93,7 @@ Type in ctrl+c to make it stop. Now that we are done setting up the resources ne
 <br />
  <img src="https://imgur.com/4HXds4o.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-8a. Login to DC-1 and install Active Directory Domain Services. Go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. 
+8a. Login to DC-1 and go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. 
 </p>
 <br />
  </p>
@@ -102,7 +102,7 @@ Type in ctrl+c to make it stop. Now that we are done setting up the resources ne
 <br />
  <img src="https://imgur.com/ynybIMT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 8b.Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
-The server has the necessary software installed but it is still not a DC yet!
+The server has the necessary software installed but it is still not a complete DC!
 </p>
 <br />
  </p>
@@ -119,7 +119,8 @@ The server has the necessary software installed but it is still not a DC yet!
 </p>
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
+9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install.
+(The forest is highest organizational structure within AD. The forest is made up of domain trees, which are made up of domains, which are made up of objects. Anything within this forest has similar configurations and will inherently trust eachother.)
 </p>
 <br />
  </p>
@@ -147,7 +148,7 @@ Within the server menu click tools at the upper right corner>“Active Directory
 </p>
 <br />
 <img src="https://imgur.com/BUCTrpw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-11b. On mydomain.com right click>new>Organizational Units, click that. And name it “_Employees”
+11b. Within ADUC clink on mydomain.com right click>new> click Organizational Units, and name it “_Employees”
 </p>
 <br />
  </p>
@@ -156,7 +157,7 @@ Within the server menu click tools at the upper right corner>“Active Directory
 <br />
 <img src="https://imgur.com/CKRc6hW.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 12. Create a new OU named “_ADMINS”
-On mydomian.com right click>new>Organizational Units. And name it _ADMINS. Refresh page and both should move up the list.
+On mydomain.com right click>new>Organizational Units. And name it _ADMINS. Refresh page and both should move up the list.
 </p>
 <br />
  </p>
@@ -174,7 +175,7 @@ Click on the admins folder then on the empty space off to the right, right click
 <br />
 <img src="https://imgur.com/lkeWVhK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 14a. Add jane_admin to the “Domain Admins” Security Group.
-The user is not an admin yet, in order for that to happen you must add the user to the DA security group. So within the Admins folder, right click Jane Doe's username and go to properties
+The user is not an admin yet, in order for that to happen you must add the user to the Domain Admins security group. So within the Admins folder, right click Jane Doe's username and go to properties
 </p>
 <br />
  </p>
@@ -182,7 +183,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/Os02gwP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-14b. Go to the "member of" tab. Click add 
+14b. Go to the "member of" tab. Click add.
 </p>
 <br />
  </p>
@@ -190,7 +191,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/7CtBJjH.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-14c.Within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
+14c. Within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
 </p>
 <br />
  </p>
@@ -213,7 +214,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/hCh7iCO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17b.In client 1 if you type “IPConfig/All” in cmd line right now on the DNS line you’ll see it does not have the I.P address of your DC. The IP address we want to connect to is 10.2.0.4
+17b. In client 1 if you type “IPConfig/All” in cmd line right now on the DNS line you’ll see it does not have the I.P address of your DC. The IP address we want to connect to is 10.2.0.4
 </p>
 <br />
 </p>
