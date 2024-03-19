@@ -184,8 +184,12 @@ Click on the admins folder then on the empty space off to the right, right click
 </p>
 <br />
 <img src="https://imgur.com/Os02gwP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-14. Add jane_admin to the “Domain Admins” Security Group
-The user is not an admin yet, in order for that to happen you must add the user to the DA security group. So right click the user>properties>member of. Click add  and within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
+14a. Add jane_admin to the “Domain Admins” Security Group
+The user is not an admin yet, in order for that to happen you must add the user to the DA security group. So within the Admins folder, right click Jane Doe's username and go to properties
+
+b. Go to the "member of" tab. Click add 
+
+c.Within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
 </p>
 <br />
 <img src="https://imgur.com/vutYJCj.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
