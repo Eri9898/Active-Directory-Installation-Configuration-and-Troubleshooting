@@ -24,8 +24,7 @@ This tutorial outlines the installation of Active Directory on a windows server.
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM "Client-1" has the same one), choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
-
+1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
 </p>
 <br />
 </p>
@@ -33,9 +32,8 @@ This tutorial outlines the installation of Active Directory on a windows server.
 <p>
 <img src="https://imgur.com/R2Nwn9Z.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-2a. Set Domain Controller’s NIC Private IP address to be static 
-Go to the networking tab>blue # next to the NIC interface>IP configurations>IP address>
-
+2a. Set Domain Controller’s NIC Private IP address to be static.
+Go to the networking tab>blue # next to the NIC interface>IP configurations>IP address
 </p>
 <br />
 </p>
@@ -43,9 +41,8 @@ Go to the networking tab>blue # next to the NIC interface>IP configurations>IP a
 <p>
  <img src="https://imgur.com/C6Z85az.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
- b. Under assignment change the dynamic to static! Then click save on the upper left.
+ 2b. Under assignment change the dynamic to static! Then click save on the upper left.
 The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the Domain will experience trouble since they would be trying to connect to the DC’s prior IP!
-
 </p>
 <br />
 </p>
@@ -62,7 +59,6 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
 <br />
 5. Ensure Connectivity between the Client and Domain Controller
 Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on DC is blocking traffic!
-
 </p>
 <br />
 </p>
@@ -71,7 +67,6 @@ Login to Client-1 with Remote Desktop, open command line and ping DC-1’s priva
  <img src="https://imgur.com/nTbgxtT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
 6a. Login to the Domain Controller and enable ICMPv4 on the local windows Firewall, which is the protocol Ping uses. So RDP to DC’s public IP address, login with the username and password you made. Click start menu>server manager. In search bar at the bottom type firewall and click on windows defendant firewal
-
 </p>
 <br />
 </p>
@@ -79,7 +74,7 @@ Login to Client-1 with Remote Desktop, open command line and ping DC-1’s priva
 <p>
  <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-   b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the ones with that protocol
+ 6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the ones with that protocol
 </p>
 <br />
 </p>
@@ -106,14 +101,14 @@ Type in ctrl+c to make it stop. Now that we are done setting up the resources ne
 </p>
 <br />
  <img src="https://imgur.com/ynybIMT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-b.Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
+8b.Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
 The server has the necessary software installed but it is still not a DC yet!
 </p>
 <br />
  </p>
 <br />
 </p>
-<br />/>
+<br />
 <img src="https://imgur.com/U3itFYu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 9a. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC".
@@ -124,7 +119,7 @@ The server has the necessary software installed but it is still not a DC yet!
 </p>
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
+9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
 </p>
 <br />
  </p>
@@ -152,7 +147,7 @@ Within the server menu click tools at the upper right corner>“Active Directory
 </p>
 <br />
 <img src="https://imgur.com/BUCTrpw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-b. On mydomain.com right click>new>Organizational Units, click that. And name it “_Employees”
+11b. On mydomain.com right click>new>Organizational Units, click that. And name it “_Employees”
 </p>
 <br />
  </p>
@@ -177,19 +172,29 @@ Click on the admins folder then on the empty space off to the right, right click
 <br />
 </p>
 <br />
-<img src="https://imgur.com/mMvnGd0.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/lkeWVhK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+14a. Add jane_admin to the “Domain Admins” Security Group.
+The user is not an admin yet, in order for that to happen you must add the user to the DA security group. So within the Admins folder, right click Jane Doe's username and go to properties
 </p>
 <br />
-<img src="https://imgur.com/lkeWVhK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ </p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/Os02gwP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-14a. Add jane_admin to the “Domain Admins” Security Group
-The user is not an admin yet, in order for that to happen you must add the user to the DA security group. So within the Admins folder, right click Jane Doe's username and go to properties
-
-b. Go to the "member of" tab. Click add 
-
-c.Within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
+14b. Go to the "member of" tab. Click add 
+</p>
+<br />
+ </p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/7CtBJjH.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+14c.Within the “Enter Objects” box type in “Domain” then click “Check names” and click “Domain Admins” group. Say ok then apply then ok again!
+</p>
+<br />
+ </p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/vutYJCj.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -199,21 +204,32 @@ c.Within the “Enter Objects” box type in “Domain” then click “Check na
 16. Use jane_admin as your admin account from now on
 </p>
 <br />
+<img src="https://imgur.com/NhISrFO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in DC. Also, Client-1 is connected to the automatic DNS system hosted by VMWare so you must make it connect to our DC’s DNS. If you try to find mydomain.com through VMware it won't be able to find the right one. 
 </p>
 <br />
-<img src="https://imgur.com/NhISrFO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/hCh7iCO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17A. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in DC. Also, Client-1 is connected to the automatic DNS system hosted by VMWare so you must make it connect to our DC’s DNS. If you try to find mydomain.com through VMware it won't be able to find the right one. In client 1 if you type “IPConfig/All” in cmd line right now on the DNS line you’ll see it does not have the I.P address of your DC. The IP address we want to connect to is XXX
+17b.In client 1 if you type “IPConfig/All” in cmd line right now on the DNS line you’ll see it does not have the I.P address of your DC. The IP address we want to connect to is 10.2.0.4
+</p>
+<br />
+</p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/8EHphUk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17B. B) FInd out what DC-1’s  private IP is. So click on DC under the VM list within Azure Portal and then go to the networking tab. Copy the NIC Private IP address.
+17c. FInd out what DC-1’s  private IP is. So click on DC under the VM list within Azure Portal and then go to the networking tab. Copy the NIC Private IP address.
+</p>
+<br />
+</p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/ledXS6O.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17C. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page.
+17d. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page.
 </p>
 <br />
 </p>
@@ -223,7 +239,6 @@ c.Within the “Enter Objects” box type in “Domain” then click “Check na
 <img src="https://imgur.com/iUomZ6a.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 18. From the Azure Portal, restart Client-1
 You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, go to system settings, and click on “Rename This PC” then underneath “member of” click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
-
 </p>
 <br />
 <h1>Set Up Desktop for Non Admins on Client 1</h1>
@@ -238,8 +253,14 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 <br />
 </p>
 <br />
+</p>
+<br />
 <img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 21. 
+</p>
+<br />
+</p>
+<br />
 </p>
 <br />
 22. 
