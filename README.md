@@ -23,71 +23,72 @@ This tutorial outlines the installation of Active Directory on a windows server.
 
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-
+ 
 1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM "Client-1" has the same one), choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
 
 </p>
 <br />
-
 </p>
 <br />
-
-</p>
-<p>
-
-</p>
-<br />
-
 <p>
 <img src="https://imgur.com/R2Nwn9Z.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ 
+2a. Set Domain Controller’s NIC Private IP address to be static 
+Go to the networking tab>blue # next to the NIC interface>IP configurations>IP address>
+
 </p>
+<br />
+</p>
+<br />
 <p>
  <img src="https://imgur.com/C6Z85az.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-
-2. Set Domain Controller’s NIC Private IP address to be static 
-Go to the networking tab>blue # next to the NIC interface>IP configurations>IP address> Under assignment change the dynamic to static! Then click save on the upper left.
+ 
+ b. Under assignment change the dynamic to static! Then click save on the upper left.
 The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the Domain will experience trouble since they would be trying to connect to the DC’s prior IP!
 
-
 </p>
 <br />
-
 </p>
 <br />
-
-</p>
-<br />
+<p>
  <img src="https://imgur.com/ZJL87cs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
 3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in Step 1. Include the same region location. Use the same username (LabUser) and password if you want (for this lab, not a good practice for IRL). Click next, and go to the networking tab. In the virtual network make sure it is connected to AD Lab. Then create!
 </p>
 <br />
-4. Click on ea VM, then check under VirtualNetwork/Subnet to see if connected to AD-lab
+4. Click on each VM, then check under VirtualNetwork/Subnet to see if they're connected to AD-lab
 </p>
 <br />
-5. Ensure Connectivity between the client and Domain Controller
-Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail cuz the firewall on DC is blocking traffic!
-</p>
-<br />
- </p>
-<br />
-</p>
-<br />
- <img src="https://imgur.com/nTbgxtT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- </p>
-<br />
- <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- 
-6. Login to the Domain Controller and enable ICMPv4 in on the local windows Firewall, which is the protocol Ping uses. So RDP to DC’s public IP address, login with the username and password you made. Click start menu>server manager. In search bar at the bottom type firewall and click on windows defendant firewal click on inbound rules> protocol. Scroll down till you find ICMPv4, right click to enable all of the ones w that protocol
+5. Ensure Connectivity between the Client and Domain Controller
+Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on DC is blocking traffic!
 
 </p>
 <br />
- </p>
+</p>
 <br />
+<p>
+ <img src="https://imgur.com/nTbgxtT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ 
+6a. Login to the Domain Controller and enable ICMPv4 on the local windows Firewall, which is the protocol Ping uses. So RDP to DC’s public IP address, login with the username and password you made. Click start menu>server manager. In search bar at the bottom type firewall and click on windows defendant firewal
+
+</p>
+<br />
+</p>
+<br />
+<p>
+ <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ 
+   b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the ones with that protocol
+</p>
+<br />
+</p>
+<br />
+<p>
  <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says time out was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1 settings!
-Type in cntrl c to make it stop. Now that we are done setting up the resources necassary for Active Directory now we can start installing it!
+ 
+7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says "time out" was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1 settings!
+Type in ctrl+c to make it stop. Now that we are done setting up the resources necassary for Active Directory now we can start installing it!
 </p>
 <br />
 <h1>Active Directory Installation</h1>
@@ -96,23 +97,37 @@ Type in cntrl c to make it stop. Now that we are done setting up the resources n
  </p>
 <br />
  <img src="https://imgur.com/4HXds4o.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  </p>
+ 
+8a. Login to DC-1 and install Active Directory Domain Services. Go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. 
+</p>
+<br />
+ </p>
+<br />
+</p>
 <br />
  <img src="https://imgur.com/ynybIMT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-8. Login to DC-1 and install Active Directory Domain Services. Go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
+b.Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
 The server has the necessary software installed but it is still not a DC yet!
-
-
 </p>
 <br />
-</p>
+ </p>
 <br />
+</p>
+<br />/>
 <img src="https://imgur.com/U3itFYu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+9a. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC".
+</p>
+<br />
+ </p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-9. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC".  On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
+b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options, click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install!
 </p>
+<br />
+ </p>
 <br />
 </p>
 <br />
@@ -128,13 +143,19 @@ To login you must add “MyDomain.com/” to the username so that you login as a
 </p>
 <br />
 <img src="https://imgur.com/x6TEu5r.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+11a. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES”
+Within the server menu click tools at the upper right corner>“Active Directory Users and Computers”.
+</p>
+<br />
+ </p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/BUCTrpw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-11. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES”
-Within the server menu click tools at the upper right corner>“Active Directory Users and Computers”. On mydomain.com right click>new>Organizational Units, click that. And name it “_Employees”
-
+b. On mydomain.com right click>new>Organizational Units, click that. And name it “_Employees”
 </p>
+<br />
+ </p>
 <br />
 </p>
 <br />
@@ -143,12 +164,16 @@ Within the server menu click tools at the upper right corner>“Active Directory
 On mydomian.com right click>new>Organizational Units. And name it _ADMINS. Refresh page and both should move up the list.
 </p>
 <br />
+ </p>
+<br />
 </p>
 <br />
 <img src="https://imgur.com/mMvnGd0.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 13. Create a new employee named “Jane Doe” with the username of “jane_admin”
 Click on the admins folder then on the empty space off to the right, right click>new>user. Name user “Jane Doe”. For the username type “Jane_Admin” click next and create a password. 
 </p>
+<br />
+ </p>
 <br />
 </p>
 <br />
