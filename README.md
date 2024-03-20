@@ -3,7 +3,7 @@
 </p>
 
 <h1>Active Directory Installation</h1>
-This tutorial outlines the installation of Active Directory on a windows server.<br />
+This tutorial outlines the installation and configuration of Active Directory on a windows server.<br />
 
 
 <h2>Environments and Technologies Used</h2>
@@ -250,13 +250,13 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 <br />
 </p>
 <br />
-<img src="https://imgur.com/6VW8VkD.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/hgxyvha.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
 19.  Allow “domain users” access to remote desktop. To do that click on “Select users that can remotely access this PC”. Then click on the add button.
 </p>
 <br />
 </p>
 <br />
-<img src="https://imgur.com/6VW8VkD.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/vXuui0T.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
 19b.Type “Domain Users” then click the “check names” button, the list should populate (it is a group in Active Directory where all users automatically become apart of) and click ok. Now the prior text box should have MyDomain\ Domain Users included. You can now log into Client-1 as a normal, non-administrative user.
 </p>
 <br />
@@ -267,19 +267,9 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 <h1>Creating Multiple Users on Active Directory</h1>
 </p>
 <br />
-</p>
-<br />
-</p>
-<br />
-<img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 20. Login to DC-1 as jane_admin 
 </p>
 <br />
-</p>
-<br />
-</p>
-<br />
-<img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 21. Right click to Open PowerShell_ise as an administrator.
 </p>
 <br />
@@ -287,12 +277,70 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 <br />
 </p>
 <br />
-<img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/p4j8aiT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 22a. Create a new File and paste the contents of a script into it. In order to do that click on the white box under file (top left) in powershell to create a new file and paste script into the white box.
 (https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/sfuq6ih.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-22b. Click “copy raw contents” on the githbu website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
+22b. Click “copy raw contents” on the githbub website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
 
-23. CLick run script (Green triangle underneath “Help”) and it’ll start up.
+23. CLick run script (Green triangle underneath “Help” circled in step 22a) and it’ll start up.
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/1aS08zc.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>    
+24. When finished, open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>Employees). (Right click and refresh, the page should start populating.)
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/BpKkEKX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
 
-24. When finished, open Active Directory Users Computer and observe the accounts in the appropriate OU Employees (ADUC>mydomain.com>Employees) (Right click that and refresh it)
+25. Attempt to log into Client-1 with one of the accounts (take note of the password in the script). In order to do that click on any user and go to the general tab, and copy their display name.
+RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian.com\DISPLAYNAME") 
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<h1>Password Troubleshooting and Unlocking accounts</h1>
+
+26. Next log into a different user onto Client 1 from the list and purposely lock out their account by messing up the password many times. Enter it wrong about 7 times and the account will not let you login anymore.
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/iHNlwPF.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
+27. Open up DC-1 and find the user again within the user’s list in ADUC>_Employees>Name> rightclick to properties>from general tab go to Account tab so you can click the unchecked box that says “Unlock Account” and hit ok
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/SMKzQVx.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
+28. You can also right click their name and click on “Reset Password” and create a new one! Check the unlock account if it is locked and hit ok!
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/MWOsq3B.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
+29. You can also right click a name to disable an account and they can’t log in anymore. You can right click to re enable it. 
+
+
