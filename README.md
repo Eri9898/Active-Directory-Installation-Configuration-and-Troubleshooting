@@ -205,8 +205,11 @@ The user is not an admin yet, in order for that to happen you must add the user 
 16. Use jane_admin as your admin account from now on
 </p>
 <br />
+<h1>Connecting Client-1 to DC </h1>
+</p>
+<br />
 <img src="https://imgur.com/NhISrFO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in DC. Also, Client-1 is connected to the automatic DNS system hosted by VMWare so you must make it connect to our DC’s DNS. If you try to find mydomain.com through VMware it won't be able to find the right one. 
+17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. Also, Client-1 is connected to the automatic DNS system hosted by VMWare so you must make it connect to our DC’s DNS. If you try to find mydomain.com through VMware it won't be able to find the right one. 
 </p>
 <br />
 </p>
@@ -243,13 +246,25 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <h1>Set Up Desktop for Non Admins on Client 1</h1>
-19.  
 </p>
 <br />
 </p>
 <br />
 <img src="https://imgur.com/6VW8VkD.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
-20. 
+19.  Allow “domain users” access to remote desktop. To do that click on “Select users that can remotely access this PC”. Then click on the add button.
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/6VW8VkD.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
+19b.Type “Domain Users” then click the “check names” button, the list should populate (it is a group in Active Directory where all users automatically become apart of) and click ok. Now the prior text box should have MyDomain\ Domain Users included. You can now log into Client-1 as a normal, non-administrative user.
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<h1>Creating Multiple Users on Active Directory</h1>
 </p>
 <br />
 </p>
@@ -257,11 +272,27 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-21. 
+20. Login to DC-1 as jane_admin 
 </p>
 <br />
 </p>
 <br />
 </p>
 <br />
-22. 
+<img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+21. Right click to Open PowerShell_ise as an administrator.
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/GPlKJnb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+22a. Create a new File and paste the contents of a script into it. In order to do that click on the white box under file (top left) in powershell to create a new file and paste script into the white box.
+(https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
+
+22b. Click “copy raw contents” on the githbu website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
+
+23. CLick run script (Green triangle underneath “Help”) and it’ll start up.
+
+24. When finished, open Active Directory Users Computer and observe the accounts in the appropriate OU Employees (ADUC>mydomain.com>Employees) (Right click that and refresh it)
