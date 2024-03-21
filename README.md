@@ -2,7 +2,7 @@
 <img src="https://imgur.com/iQIP14f.png" alt="osTicket logo"/>
 </p>
 
-<h1>Active Directory Installation</h1>
+<h1>Active Directory Installation, Configuration and Troubleshooting</h1>
 This tutorial outlines the installation and configuration of Active Directory on a windows server.<br />
 
 
