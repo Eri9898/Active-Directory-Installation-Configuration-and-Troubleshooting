@@ -3,7 +3,7 @@
 </p>
 
 <h1>Active Directory Installation, Configuration and Troubleshooting</h1>
-This tutorial outlines the installation and configuration of Active Directory on a windows server.<br />
+This tutorial outlines the installation, configuration and troublehsooting of Active Directory on a windows server.<br />
 
 
 <h2>Environments and Technologies Used</h2>
