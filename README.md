@@ -344,4 +344,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian
 <img src="https://imgur.com/MWOsq3B.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
 29. You can also right click a name to disable an account and they can’t log in anymore. You can right click to re enable it. 
 
+30. Active Directory is a useful software for helping organize users and their permissions! Hopefully this gave you valuable insight on how
+Active Directory works! That is the end of this lab.
+
 
