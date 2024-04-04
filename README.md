@@ -291,7 +291,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 
 22b. Click “copy raw contents” on the githbub website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
 
-23. CLick run script (Green triangle underneath “Help” circled in step 22a) and it’ll start up.
+23. Click run script (Green triangle underneath “Help” circled in step 22a) and it’ll start up.
 </p>
 <br />
 </p>
