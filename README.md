@@ -121,7 +121,7 @@ The server has the necessary software installed but it is still not a complete D
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install.
-(The forest is highest organizational structure within AD. The forest is made up of domain trees, which are made up of domains, which are made up of objects. Anything within this forest has similar configurations and will inherently trust eachother.)
+(The forest is highest organizational structure within AD. The forest is made up of domain trees, which are made up of domains, which are made up of objects. Anything within this forest has similar configurations and will inherently trust each other.)
 </p>
 <br />
  </p>
