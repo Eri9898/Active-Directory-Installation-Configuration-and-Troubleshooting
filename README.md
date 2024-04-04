@@ -149,7 +149,7 @@ Within the server menu click tools at the upper right corner>“Active Directory
 </p>
 <br />
 <img src="https://imgur.com/BUCTrpw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-11b. Within ADUC clink on mydomain.com right click>new> click Organizational Units, and name it “_Employees”
+11b. Within ADUC click on mydomain.com right click>new> click Organizational Units, and name it “_Employees”
 </p>
 <br />
  </p>
