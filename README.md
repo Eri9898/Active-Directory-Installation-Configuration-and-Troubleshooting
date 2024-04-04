@@ -15,7 +15,8 @@ This tutorial outlines the installation, configuration and troublehsooting of Ac
 - Active Directory 
 
 <h2>Operating Systems Used </h2>
--Windows 2022 Server
+
+- Windows 2022 Server
 - Windows 10</b> (21H2)
 
 
