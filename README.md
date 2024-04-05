@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://imgur.com/iQIP14f.png" alt="osTicket logo"/>
+<img src="https://imgur.com/oNr4Sqk.png" alt="osTicket logo"/>
 </p>
 
 <h1>Active Directory Installation, Configuration and Troubleshooting</h1>
