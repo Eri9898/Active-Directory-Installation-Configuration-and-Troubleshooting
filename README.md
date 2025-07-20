@@ -25,7 +25,7 @@ This tutorial outlines the installation, configuration and troublehsooting of Ac
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Check licensing boxes at the bottom! And click create.
+1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only, Only Remote Desktop Protocol (RDP) should be allowed through the firewall to minimize exposure to potential threats. Check licensing boxes at the bottom! And click create.
 </p>
 <br />
 </p>
@@ -52,14 +52,14 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
  <img src="https://imgur.com/ZJL87cs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in Step 1. Include the same region location. Use the same username (LabUser) and password if you want (for this lab, not a good practice for IRL). Click next, and go to the networking tab. In the virtual network make sure it is connected to AD Lab. Then create!
+3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in Step 1. The client machine needs to be on the same virtual network as your Domain Controller to communicate properly. Include the same region location, to keep everything close and reduce latency. Use the same username (LabUser) and password if you want (not a good practice IRL). Click next, and go to the networking tab. In the virtual network make sure it is connected to AD Lab. Then create!
 </p>
 <br />
 4. Click on each VM, then check under VirtualNetwork/Subnet to see if they're connected to AD-lab
 </p>
 <br />
 5. Ensure Connectivity between the Client and Domain Controller
-Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic!
+Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. The initial failure is expected
 </p>
 <br />
 </p>
@@ -75,7 +75,7 @@ Login to Client-1 with Remote Desktop, open command line and ping DC-1’s priva
 <p>
  <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
- 6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the ones with that protocol
+ 6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the rules with that protocol
 </p>
 <br />
 </p>
@@ -83,8 +83,14 @@ Login to Client-1 with Remote Desktop, open command line and ping DC-1’s priva
 <p>
  <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-7. Check back at Client-1 to see the ping succeed. It was continuously pinging the whole time so the first part that says "time out" was before we enabled ICMPv4 and you can see that Client-1 has started to get a reply as soon as we changed DC-1's settings!
-Type in ctrl+c to make it stop. Now that we are done setting up the resources necassary for Active Directory, we can start installing the Active Directory software onto the Domain Controller.
+7. Go back to Client-1 where the continuous ping (ping -t <DC-1_private_IP>) was running.
+
+You’ll notice that the initial pings timed out — this was before ICMPv4 was enabled on the Domain Controller.
+
+As soon as the firewall rule was enabled on DC-1, successful ping replies should begin appearing.
+
+Press Ctrl + C to stop the ping.
+Type in ctrl+c to make it stop.Now that the necessary resources are deployed and basic connectivity is confirmed, we can begin installing Active Directory Domain Services (AD DS) on the Domain Controller.
 </p>
 <br />
 <h1>Active Directory Installation</h1>
@@ -93,8 +99,8 @@ Type in ctrl+c to make it stop. Now that we are done setting up the resources ne
  </p>
 <br />
  <img src="https://imgur.com/4HXds4o.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- 
-8a. Login to DC-1 and go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. 
+
+8a. Login to DC-1 and go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next.  A role-based installation lets you install services (like AD DS) on a specific server 
 </p>
 <br />
  </p>
@@ -102,7 +108,22 @@ Type in ctrl+c to make it stop. Now that we are done setting up the resources ne
 </p>
 <br />
  <img src="https://imgur.com/ynybIMT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-8b.Then you must select the server role, choose Active Directory Domain server, in the next tab select add feature. On the select server roles window hit next, on select features hit next, on active directory domain service hit next,then click install!
+8b. Install the Active Directory Domain Services (AD DS) Role
+
+
+    In the Select Server Roles window, check Active Directory Domain Services.
+
+    A pop-up will appear — click Add Features to confirm.
+
+    Click Next through:
+
+        The Server Roles summary
+
+        The Features screen
+
+        The AD DS Overview
+
+    Finally, click Install.
 The server has the necessary software installed but it is still not a complete DC!
 </p>
 <br />
@@ -112,7 +133,8 @@ The server has the necessary software installed but it is still not a complete D
 <br />
 <img src="https://imgur.com/U3itFYu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-9a. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC".
+9a. Next you will promote it as DC. After installation there will be an exclamation point in the top left corner. Click on it then click the blue text, “Promote the server to a DC" ,This step begins the process of promoting the server so it can act as a Domain Controller, enabling it to manage authentication, DNS, and directory services across your environment.
+
 </p>
 <br />
  </p>
@@ -120,8 +142,12 @@ The server has the necessary software installed but it is still not a complete D
 </p>
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options click next and click next on additional notes. Click next on review and click next on prerequisites, click next on install.
-(The forest is highest organizational structure within AD. The forest is made up of domain trees, which are made up of domains, which are made up of objects. Anything within this forest has similar configurations and will inherently trust each other.)
+9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options click next and click next on additional notes. Click next on review and click next on prerequisites, click install.
+You're creating a new forest, which is the top-level security boundary in Active Directory. A forest contains:
+    Domain trees, made up of
+    Domains, which contain
+    Objects (users, computers, groups, etc.)
+All domains within the same forest automatically trust each other, share a common schema, and allow centralized management. Naming your forest mydomain.com creates the first domain in the structure, your root domain
 </p>
 <br />
  </p>
@@ -132,16 +158,25 @@ The server has the necessary software installed but it is still not a complete D
 </p>
 <br />
 <img src="https://imgur.com/0lIWNs2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-10.Restart and then log back into DC-1 as user: mydomain.com\username 
-To login you must add “MyDomain.com/” to the username so that you login as a DC with your user.
+10.Restart and then log back into DC-1 as mydomain.com\LabUser
+Adding the domain prefix (mydomain.com\) tells Windows to authenticate against Active Directory instead of the local Security Accounts Manager database. A successful logon confirms that DC‑1 has fully promoted and is now serving domain authentication.
 </p>
 <br />
 <h1>Create an Admin and Normal User Account in AD </h1>
 </p>
 <br />
 <img src="https://imgur.com/x6TEu5r.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-11a. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES”
-Within the server menu click tools at the upper right corner>“Active Directory Users and Computers”.
+On DC-1, open Server Manager.
+
+In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC).
+
+In the left-hand pane, expand your domain (e.g., mydomain.com).
+
+Right-click on the domain name> select New> Organizational Unit.
+
+Name the new OU: _EMPLOYEES
+
+Click OK.
 </p>
 <br />
  </p>
@@ -210,7 +245,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/NhISrFO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. Also, Client-1 is connected to the automatic DNS system hosted by VMWare so you must make it connect to our DC’s DNS. If you try to find mydomain.com through VMware it won't be able to find the right one. 
+17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. Client-1 must use the Domain Controller’s DNS to properly resolve domain names like mydomain.com. By default, Client-1 might use VMware’s automatic DNS or Azure’s default DNS, which won’t recognize your AD domain. Pointing DNS to DC-1 ensures that Client-1 can find the domain services, authenticate users, and join the domain successfully.
 </p>
 <br />
 </p>
@@ -218,7 +253,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/hCh7iCO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17b. In client 1 if you type “IPConfig/All” in cmd line right now on the DNS line you’ll see it does not have the I.P address of your DC. The IP address we want to connect to is 10.2.0.4
+17b. Within Clinet-1's Command Prompt type “IPConfig/All”  and on the DNS line you’ll see it does not have the I.P address of your DC. So this confirms that Client-1 is not fully connected to the DC yet. The IP address we want to connect to is 10.2.0.4
 </p>
 <br />
 </p>
