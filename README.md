@@ -269,7 +269,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/ledXS6O.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17d. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page.
+17d. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page. By default, Client-1 inherits DNS settings from the virtual network, which usually points to Azure or VMware DNS servers. Changing it to custom and specifying the DC’s IP ensures Client-1 uses the Domain Controller’s DNS to properly resolve domain names and services required to join and operate within the domain.
 </p>
 <br />
 </p>
@@ -281,32 +281,13 @@ The user is not an admin yet, in order for that to happen you must add the user 
 You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, go to system settings, and click on “Rename This PC” then underneath “member of” click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
 </p>
 <br />
-<h1>Set Up Desktop for Non Admins on Client 1</h1>
-</p>
-<br />
-</p>
-<br />
-<img src="https://imgur.com/hgxyvha.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
-19.  Allow “domain users” access to remote desktop. To do that click on “Select users that can remotely access this PC”. Then click on the add button.
-</p>
-<br />
-</p>
-<br />
-<img src="https://imgur.com/vXuui0T.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
-19b.Type “Domain Users” then click the “check names” button, the list should populate (it is a group in Active Directory where all users automatically become apart of) and click ok. Now the prior text box should have MyDomain\ Domain Users included. You can now log into Client-1 as a normal, non-administrative user.
-</p>
-<br />
-</p>
-<br />
-</p>
-<br />
 <h1>Creating Multiple Users on Active Directory</h1>
 </p>
 <br />
-20. Login to DC-1 as jane_admin 
+19. Login to DC-1 as jane_admin 
 </p>
 <br />
-21. Right click to Open PowerShell_ise as an administrator.
+20. Right click to Open PowerShell_ise as an administrator.
 </p>
 <br />
 </p>
@@ -314,7 +295,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/p4j8aiT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-22a. Create a new File and paste the contents of a script into it. In order to do that click on the white box under file (top left) in powershell to create a new file and paste script into the white box.
+21a. Create a new File and paste the contents of a script into it. In order to do that click on the white box under file (top left) in powershell to create a new file and paste script into the white box.
 (https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
 </p>
 <br />
@@ -324,9 +305,9 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 <br />
 <img src="https://imgur.com/sfuq6ih.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-22b. Click “copy raw contents” on the githbub website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
+21b. Click “copy raw contents” on the githbub website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
 
-23. Click run script (Green triangle underneath “Help” circled in step 22a) and it’ll start up.
+22. Click run script (Green triangle underneath “Help” circled in step 22a) and it’ll start up.
 </p>
 <br />
 </p>
@@ -334,7 +315,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/1aS08zc.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>    
-24. When finished, open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>Employees). (Right click and refresh, the page should start populating.)
+23. When finished, open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>Employees). (Right click and refresh, the page should start populating.)
 </p>
 <br />
 </p>
@@ -342,8 +323,27 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/BpKkEKX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+<h1>Set Up Desktop for Non Admins on Client 1</h1>
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/hgxyvha.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
+24.  Allow “domain users” access to remote desktop. To do that click on “Select users that can remotely access this PC”. Then click on the add button.
+</p>
+<br />
+</p>
+<br />
+<img src="https://imgur.com/vXuui0T.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
+25b.Type “Domain Users” then click the “check names” button, the list should populate (it is a group in Active Directory where all users automatically become apart of) and click ok. Now the prior text box should have MyDomain\ Domain Users included. You can now log into Client-1 as a normal, non-administrative user.
+</p>
+<br />
+</p>
+<br />
+</p>
+<br />
 
-25. Attempt to log into Client-1 with one of the accounts (take note of the password in the script). In order to do that click on any user and go to the general tab, and copy their display name.
+26. Attempt to log into Client-1 with one of the accounts (take note of the password in the script). In order to do that click on any user and go to the general tab, and copy their display name.
 RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian.com\DISPLAYNAME") 
 </p>
 <br />
@@ -353,7 +353,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian
 <br />
 <h1>Password Troubleshooting and Unlocking accounts</h1>
 
-26. Next log into a different user onto Client 1 from the list and purposely lock out their account by messing up the password many times. Enter it wrong about 7 times and the account will not let you login anymore.
+27. Next log into a different user onto Client 1 from the list and purposely lock out their account by messing up the password many times. Enter it wrong about 7 times and the account will not let you login anymore.
 </p>
 <br />
 </p>
@@ -361,7 +361,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian
 </p>
 <br />
 <img src="https://imgur.com/iHNlwPF.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
-27. Open up DC-1 and find the user again within the user’s list in ADUC>_Employees>Name> rightclick to properties>from general tab go to Account tab so you can click the unchecked box that says “Unlock Account” and hit ok
+28. Open up DC-1 and find the user again within the user’s list in ADUC>_Employees>Name> rightclick to properties>from general tab go to Account tab so you can click the unchecked box that says “Unlock Account” and hit ok
 </p>
 <br />
 </p>
@@ -369,7 +369,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian
 </p>
 <br />
 <img src="https://imgur.com/SMKzQVx.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
-28. You can also right click their name and click on “Reset Password” and create a new one! Check the unlock account if it is locked and hit ok!
+29. You can also right click their name and click on “Reset Password” and create a new one! Check the box by unlock account and hit ok!
 </p>
 <br />
 </p>
@@ -377,7 +377,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian
 </p>
 <br />
 <img src="https://imgur.com/MWOsq3B.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
-29. You can also right click a name to disable an account and they can’t log in anymore. You can right click to re enable it. 
+30. You can also right click a name to disable an account . You can right click to re enable it. 
 </p>
 <br />
 30. Active Directory is a useful software for helping organize users and their permissions! Hopefully this gave you valuable insight on how
