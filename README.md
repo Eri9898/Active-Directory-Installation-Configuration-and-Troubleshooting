@@ -59,7 +59,7 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
 </p>
 <br />
 5. Ensure Connectivity between the Client and Domain Controller
-Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. The initial failure is expected
+Login to Client-1 with Remote Desktop, open command line and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
 </p>
 <br />
 </p>
@@ -90,7 +90,7 @@ You’ll notice that the initial pings timed out — this was before ICMPv4 was 
 As soon as the firewall rule was enabled on DC-1, successful ping replies should begin appearing.
 
 Press Ctrl + C to stop the ping.
-Type in ctrl+c to make it stop.Now that the necessary resources are deployed and basic connectivity is confirmed, we can begin installing Active Directory Domain Services (AD DS) on the Domain Controller.
+Type in ctrl+c to make it stop. Now that the necessary resources are deployed and basic connectivity is confirmed, we can begin installing Active Directory Domain Services (AD DS) on the Domain Controller.
 </p>
 <br />
 <h1>Active Directory Installation</h1>
@@ -142,12 +142,11 @@ The server has the necessary software installed but it is still not a complete D
 </p>
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-9b. On the deployment configuration page select “Add a new forest”, then create a root domain name, it will be mydomain.com, click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! Click next, on DNS options click next and click next on additional notes. Click next on review and click next on prerequisites, click install.
-You're creating a new forest, which is the top-level security boundary in Active Directory. A forest contains:
+9b. On the deployment configuration page select “Add a new forest”,  which is the top-level security boundary in Active Directory. Next create a root domain name, (mydomain.com). This is the first domain in the structure aka your root domain. click next on Domain Controller options and create a DSRM(Directory Services Restore Mode) password! DSRM is a local-only administrator password used to log into a Domain Controller in Directory Services Restore Mode, typically for repairing or recovering Active Directory or the DC itself. Click next, on DNS options, click next on additional notes. Click next on review and click next on prerequisites, click install.
+A forest, which is the top-level security boundary contains:
     Domain trees, made up of
     Domains, which contain
     Objects (users, computers, groups, etc.)
-All domains within the same forest automatically trust each other, share a common schema, and allow centralized management. Naming your forest mydomain.com creates the first domain in the structure, your root domain
 </p>
 <br />
  </p>
@@ -158,8 +157,7 @@ All domains within the same forest automatically trust each other, share a commo
 </p>
 <br />
 <img src="https://imgur.com/0lIWNs2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-10.Restart and then log back into DC-1 as mydomain.com\LabUser
-Adding the domain prefix (mydomain.com\) tells Windows to authenticate against Active Directory instead of the local Security Accounts Manager database. A successful logon confirms that DC‑1 has fully promoted and is now serving domain authentication.
+10.Restart to apply the configurations and then log back into DC-1 as mydomain.com\LabUser Adding the domain prefix (mydomain.com\) tells Windows to authenticate against Active Directory instead of the local Security Accounts Manager database. A successful logon confirms that DC‑1 has fully promoted and is now serving domain authentication.
 </p>
 <br />
 <h1>Create an Admin and Normal User Account in AD </h1>
@@ -238,7 +236,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 15. Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin”
 </p>
 <br />
-16. Use jane_admin as your admin account from now on
+16. User Jane has succesfully become an admin!
 </p>
 <br />
 <h1>Connecting Client-1 to DC </h1>
