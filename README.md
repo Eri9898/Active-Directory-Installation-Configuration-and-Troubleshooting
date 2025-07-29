@@ -30,7 +30,7 @@ This tutorial outlines the installation, configuration and troublehsooting of Ac
 </p>
 <br />
 <p>
-2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Expand the list next to image and Choose windows server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only, then review and create.
+2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Expand the list next to image and Choose windows server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only
 </p>
 <br />
 </p>
@@ -38,7 +38,7 @@ This tutorial outlines the installation, configuration and troublehsooting of Ac
 <p>
 <img src="https://imgur.com/R2Nwn9Z.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-2a. Set Domain Controller’s NIC Private IP address to be static.
+2a. Go to the networking tab and Set Domain Controller’s NIC Private IP address to be static.
 Go to the networking tab>blue # next to the NIC interface>IP configurations>IP address
 </p>
 <br />
