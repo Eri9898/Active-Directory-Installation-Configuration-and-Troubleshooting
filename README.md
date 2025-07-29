@@ -24,8 +24,13 @@ This tutorial outlines the installation, configuration and troublehsooting of Ac
 
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- 
-1. Create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only, Only Remote Desktop Protocol (RDP) should be allowed through the firewall to minimize exposure to potential threats. Check licensing boxes at the bottom! And click create.
+1) Go to resource group and create a new group. You cam name the resource group “AD-Lab". Review and Create.
+ </p>
+<br />
+</p>
+<br />
+<p>
+2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only, Only Remote Desktop Protocol (RDP) should be allowed through the firewall to minimize exposure to potential threats. Check licensing boxes at the bottom! And click create.
 </p>
 <br />
 </p>
