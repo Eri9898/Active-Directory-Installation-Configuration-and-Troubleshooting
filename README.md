@@ -25,7 +25,7 @@ This tutorial outlines the installation, configuration and troublehsooting of Ac
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-1. Create the Domain Controller VM (Windows Server 2022) named “DC-1”. Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only, Only Remote Desktop Protocol (RDP) should be allowed through the firewall to minimize exposure to potential threats. Check licensing boxes at the bottom! And click create.
+1. Create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the resource group “AD-Lab", name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Choose window server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only, Only Remote Desktop Protocol (RDP) should be allowed through the firewall to minimize exposure to potential threats. Check licensing boxes at the bottom! And click create.
 </p>
 <br />
 </p>
@@ -43,7 +43,7 @@ Go to the networking tab>blue # next to the NIC interface>IP configurations>IP a
  <img src="https://imgur.com/C6Z85az.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
  2b. Under assignment change the dynamic to static! Then click save on the upper left.
-The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the Domain will experience trouble since they would be trying to connect to the DC’s prior IP!
+The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the Domain will experience trouble since they would be trying to connect to the DC’s prior IP! 
 </p>
 <br />
 </p>
