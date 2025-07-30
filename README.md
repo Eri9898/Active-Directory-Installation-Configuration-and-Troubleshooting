@@ -31,7 +31,7 @@ This creates a Windows Server environment using Microsoft Azure. A domain contro
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
- 1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and Create.
+ 1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create.
 </p>
 <br />
 </p>
@@ -45,7 +45,7 @@ This creates a Windows Server environment using Microsoft Azure. A domain contro
 <p>
 <img src="https://imgur.com/R2Nwn9Z.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-2a. After VM is created go to resource and Go to the networking tab. Click on the blue font by IP configuration. Click on blue font ipconfig and within that  Set Domain Controller’s NIC Private IP address to be static then save.
+2a. After VM is created go to resource and go to the networking tab. Click on the blue font by IP configuration. Click on blue font ipconfig and within that set Domain Controller’s NIC Private IP address to be static then save.
 </p>
 <br />
 </p>
@@ -53,8 +53,7 @@ This creates a Windows Server environment using Microsoft Azure. A domain contro
 <p>
  <img src="https://imgur.com/C6Z85az.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
- 2b.
-The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the Domain will experience trouble since they would be trying to connect to the DC’s prior IP! 
+2b. The DC must have a static IP so that it doesn’t change, if it did change (after a reboot for example) any computers connected to the domain will experience trouble since they would be trying to connect to the DC’s prior IP! 
 </p>
 <br />
 </p>
@@ -71,7 +70,7 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
 <br />
 <h2>Ensure Connectivity between the Client and Domain Controller</h2>
 
-5.Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. Open command line and ping DC-1’s private IP address with "ping -t "<ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
+5. Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. Open command line and ping DC-1’s private IP address with "ping -t "<ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
 </p>
 <br />
 </p>
