@@ -139,7 +139,7 @@ The server has the necessary software but it's not a DC yet.
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 9b. On the deployment configuration page select “Add a new forest”,  which is the top-level security boundary in Active Directory. Next create a root domain name, (mydomain.com). This is the first domain in the structure aka your root domain. click next to Domain Controller options and 
-create a DSRM(Directory Services Restore Mode) password! DSRM is a local-only administrator password used to log into a Domain Controller in Directory Services Restore Mode, typically for repairing or recovering Active Directory or the DC itself. Click next, on DNS options (can't create delegation for this DNS ignored) , click next on additional notes. Click next on review and click next on prerequisites, click install.
+create a DSRM(Directory Services Restore Mode) password! DSRM is a local-only administrator password used to log into a Domain Controller in Directory Services Restore Mode, typically for repairing or recovering Active Directory or the DC itself. Click next on DNS options, click next on additional notes. Then click next on review and click next on prerequisites, click install.
 </p>
 <br />
  </p>
