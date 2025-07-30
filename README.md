@@ -3,12 +3,24 @@
 </p>
 
 <h1>Active Directory Installation, Configuration and Troubleshooting</h1>
-This creates a Windows Server environment using Microsoft Azure. A domain controller will be created and configured, a Windows client will be added to the domain, and Active Directory will be utilizd to manage user accounts, permissions, and group policies. This walkthrough covers user provisioning, domain joins, firewall configs, DNS redirection, and remote access setup for domain users.<br />
 
+This creates a Windows Server environment using Microsoft Azure. A domain controller will be created and configured, a Windows client will be added to the domain, and Active Directory will be utilized to manage user accounts, permissions, and group policies. This walkthrough covers user provisioning, domain joins, firewall configs, DNS redirection, and remote access setup for domain users.<br /> 
 
+<h1>Skills Demonstrated</h1>
+
+- Provisioned and configured Azure VMs
+- Installed and promoted Windows Server to Domain Controller
+- Created and managed Users, Groups, and Organizational Units (OUs)
+- Joined a Client VM to a Domain
+- Set static IP, DNS, and networking rules
+- Granted RDP access to Domain Users 
+- Unlocked/reset passwords via ADUC
+- Bulk created Users with Powershell script
+
+ 
 <h2>Environments and Technologies Used</h2>
 
--Microsoft Azure
+- Microsoft Azure
 - Windows 10 Computer
 - Windows 2022 Server
 - Remote Desktop
@@ -24,8 +36,9 @@ This creates a Windows Server environment using Microsoft Azure. A domain contro
 
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-1) Go to resource group and create a new group. You cam name the resource group “AD-Lab". Review and Create.
- </p>
+ 
+ 1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and Create.
+</p>
 <br />
 </p>
 <br />
@@ -56,14 +69,15 @@ The DC must have a static IP so that it doesn’t change, if it did change (afte
  <img src="https://imgur.com/ZJL87cs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-3.Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group that was created in Step 1. Include the same region location, to keep everything close and reduce latency. Use the same username (LabUser) and password if you want (not a good practice IRL). Click next, and go to the networking tab make  sure machine is connected rto same vnet as DC.  The client machine needs to be on the same virtual network as your Domain Controller to communicate properly. Then create!
+3.Create the Client VM (Windows 10) and name it “Client-1”. Use the same Resource Group that was created in Step 1. Include the same region location to keep everything close and reduce latency. Create a new username and password. Click next, and go to the networking tab to make sure the machine is connected to the same vnet as the DC. The client needs to be on the same virtual network as the Domain Controller to communicate properly. Then create!
 </p>
 <br />
 4. Click on each VM, then check under VirtualNetwork/Subnet to see if its connected to AD-lab
 </p>
 <br />
-5. Ensure Connectivity between the Client and Domain Controller
-Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. open command line and ping DC-1’s private IP address with "ping -t "<ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity (which is failing ofc) from the client to the domain controller and security settings. 
+<h2>Ensure Connectivity between the Client and Domain Controller</h2>
+
+5.Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. Open command line and ping DC-1’s private IP address with "ping -t "<ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
 </p>
 <br />
 </p>
@@ -79,7 +93,7 @@ Login to Client-1 with Remote Desktop, search it's public IP and use the login y
 <p>
  <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
- 6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the rules with that protocol
+6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the rules with that protocol
 </p>
 <br />
 </p>
@@ -88,11 +102,8 @@ Login to Client-1 with Remote Desktop, search it's public IP and use the login y
  <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
 7. Go back to Client-1 where the continuous ping (ping -t <DC-1_private_IP>) was running.
-
 You’ll notice that the initial pings timed out — this was before ICMPv4 was enabled on the Domain Controller.
-
 As soon as the firewall rule was enabled on DC-1, successful ping replies should begin appearing.
-
 Press Ctrl + C to stop the ping.
 Now that the necessary resources are deployed and basic connectivity is confirmed, we can begin installing Active Directory Domain Services (AD DS) on the Domain Controller.
 </p>
@@ -104,7 +115,8 @@ Now that the necessary resources are deployed and basic connectivity is confirme
 <br />
  <img src="https://imgur.com/4HXds4o.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-8a. Login to DC-1 and go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. Select ADDS 
+8a. Login to DC-1 and go to server manager>add roles and features. Hit next, make sure it's selected on “role based installation” then hit next, make sure DC-1 is the selected server then hit next. 
+
 <br />
  </p>
 <br />
@@ -112,22 +124,10 @@ Now that the necessary resources are deployed and basic connectivity is confirme
 <br />
  <img src="https://imgur.com/ynybIMT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 8b. 
-
-
-    In the Select Server Roles window, check Active Directory Domain Services.
-
-    A pop-up will appear — click Add Features to confirm.
-
-    Click Next through:
-
-        The Server Roles summary
-
-        The Features screen
-
-        The AD DS Overview
-
-    Finally, click Install Active Directory Domain Services (AD DS)
-The server has the necessary software installed but it is still not a complete DC!
+In the selecet Server Role window, check Active Directory Domain Services.
+A pop up will appear, click add features to confirm.
+Click next through the server role summary, features, and overview. Finally, click install ADDS.
+The server has the necessary software but it's not a DC yet.
 </p>
 <br />
  </p>
@@ -147,10 +147,6 @@ The server has the necessary software installed but it is still not a complete D
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 9b. On the deployment configuration page select “Add a new forest”,  which is the top-level security boundary in Active Directory. Next create a root domain name, (mydomain.com). This is the first domain in the structure aka your root domain. click next to Domain Controller options and 
 create a DSRM(Directory Services Restore Mode) password! DSRM is a local-only administrator password used to log into a Domain Controller in Directory Services Restore Mode, typically for repairing or recovering Active Directory or the DC itself. Click next, on DNS options (can't create delegation for this DNS ignored) , click next on additional notes. Click next on review and click next on prerequisites, click install.
-A forest, which is the top-level security boundary contains:
-    Domain trees, made up of
-    Domains, which contain
-    Objects (users, computers, groups, etc.)
 </p>
 <br />
  </p>
@@ -176,7 +172,7 @@ In the left-hand pane, expand your domain (e.g., mydomain.com).
 
 Right-click on the domain name> select New> Organizational Unit.
 
-Name the new OU: _EMPLOYEES
+Name the new OU: _EMPLOYEES (make sure the format and spelling is exact, we will be using a script that will send users to this file if it's mispelled the users will not be sent to the correct location.)
 
 Click OK.
 </p>
@@ -247,7 +243,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/NhISrFO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. Client-1 must use the Domain Controller’s DNS to properly resolve domain names like mydomain.com. By default, Client-1 might use VMware’s automatic DNS or Azure’s default DNS, which won’t recognize your AD domain. Pointing DNS to DC-1 ensures that Client-1 can find the domain services, authenticate users, and join the domain successfully.
+17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. By default, Client-1 will use Azure’s default DNS, which won’t recognize your AD domain. Pointing Client 1's DNS to DC-1 ensures that Client-1 can join the domain successfully.
 </p>
 <br />
 </p>
@@ -271,7 +267,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/ledXS6O.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17d. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page. By default, Client-1 inherits DNS settings from the virtual network, which usually points to Azure or VMware DNS servers. Changing it to custom and specifying the DC’s IP ensures Client-1 uses the Domain Controller’s DNS to properly resolve domain names and services required to join and operate within the domain.
+17d. So go back to Client 1 VM and click on it. Go to networking and then click the blue text next to “Network Interface:” >DNS servers on the left side list. Under DNS servers “Inherit from Virtual Network” will be checked so change it to “custom”. Paste DC’s Private IP address into the “Add DNS server” text box. Click the save button towards the top of the page. Changing it to custom and specifying the DC’s IP ensures Client-1 uses the Domain Controller’s DNS to properly resolve domain names and services required to join and operate within the domain.
 </p>
 <br />
 </p>
@@ -280,7 +276,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 <br />
 <img src="https://imgur.com/iUomZ6a.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 18. From the Azure Portal, restart Client-1
-You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, RDP back in go to system settings, go to the "about" tab, and click on “Rename This PC (advanced)” then click the "change button" necxt to "rename this compuer", underneath “member of” click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
+You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, RDP back in, go to system settings, go to the "about" tab, and click on “Rename This PC (advanced)”. Then click the "change button" next to "rename this compuer", underneath “member of”, click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
 </p>
 <br />
 <h1>Creating Multiple Users on Active Directory</h1>
@@ -297,7 +293,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/p4j8aiT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-21a. Create a new File and paste the contents of a script into it. In order to do that click on the white box under file (top left) in powershell to create a new file and paste script into the white box.
+21a. Create a new File and paste the contents of the script into it. In order to do that click on the white box under file (top left) in powershell to create a new file and paste script into the white box.
 (https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
 </p>
 <br />
@@ -317,7 +313,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/1aS08zc.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>    
-23. When finished, Back in the server menu from DC In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC). open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>Employees). (Right click and refresh, the page should start populating.)
+23. When finished, Back in the server menu from DC In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC). open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>_EMPLOYEES). (Right click and refresh, the page should start populating.)
 </p>
 <br />
 </p>
@@ -331,7 +327,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/hgxyvha.png" height="200%" width="200%" alt="Disk Sanitization Steps"/>
-24.  Allow “domain users” access to remote desktop. To do that click on “Select users that can remotely access this PC”. Then click on the add button.
+24.  Allow “domain users” access to remote desktop. To do that go to system settings. Go to the Remote Desktop tab and click on “Select users that can remotely access this PC”. Then click on the add button.
 </p>
 <br />
 </p>
@@ -345,8 +341,8 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 
-26. Attempt to log into Client-1 with one of the accounts (take note of the password in the script). In order to do that click on any user and go to the general tab, and copy their display name.
-RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomian.com\DISPLAYNAME") 
+26. Attempt to log into Client-1 with one of the accounts, take note of the password in the script ("Password1"). In order to do that click on any user and go to the general tab, and copy their display name.
+RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomain.com\DISPLAYNAME") 
 </p>
 <br />
 </p>
