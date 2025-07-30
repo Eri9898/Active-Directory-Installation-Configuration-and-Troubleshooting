@@ -280,7 +280,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 <br />
 <img src="https://imgur.com/iUomZ6a.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 18. From the Azure Portal, restart Client-1
-You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, RDP back in go to system settings, and click on “Rename This PC” then underneath “member of” click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
+You must restart to flush the DNS cache so that it can forget VMWare’s IP address as the DNS and start connecting to DC-1’s DNS. After you restarted, RDP back in go to system settings, go to the "about" tab, and click on “Rename This PC (advanced)” then click the "change button" necxt to "rename this compuer", underneath “member of” click on domain and in the text box type in “MyDomain.com”. After this you will be prompted to log in. So login using your admin account. Afterwards the computer will restart again
 </p>
 <br />
 <h1>Creating Multiple Users on Active Directory</h1>
