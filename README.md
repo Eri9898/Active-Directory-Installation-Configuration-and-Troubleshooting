@@ -3,7 +3,7 @@
 </p>
 
 <h1>Active Directory Installation, Configuration and Troubleshooting</h1>
-This creates a Windows Server environment using Microsoft Azure. A domain controller will be created and configured, a Windows client will be added to the domain, and utilize Active Directory to manage user accounts, permissions, and group policies. This walkthrough covers user provisioning, domain joins, firewall configs, DNS redirection, and remote access setup for domain users.<br />
+This creates a Windows Server environment using Microsoft Azure. A domain controller will be created and configured, a Windows client will be added to the domain, and Active Directory will be utilizd to manage user accounts, permissions, and group policies. This walkthrough covers user provisioning, domain joins, firewall configs, DNS redirection, and remote access setup for domain users.<br />
 
 
 <h2>Environments and Technologies Used</h2>
