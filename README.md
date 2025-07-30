@@ -317,7 +317,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/1aS08zc.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>    
-23. When finished, open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>Employees). (Right click and refresh, the page should start populating.)
+23. When finished, Back in the server menu from DC In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC). open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>Employees). (Right click and refresh, the page should start populating.)
 </p>
 <br />
 </p>
