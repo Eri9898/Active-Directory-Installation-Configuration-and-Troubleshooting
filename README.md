@@ -26,12 +26,6 @@ This creates a Windows Server environment using Microsoft Azure. A domain contro
 - Remote Desktop
 - Active Directory 
 
-<h2>Operating Systems Used </h2>
-
-- Windows 2022 Server
-- Windows 10</b> (21H2)
-
-
 <h2>Create Resources</h2>
 
 <p>
