@@ -31,7 +31,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 <p>
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
- 1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create.
+1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create.
 </p>
 <br />
 </p>
