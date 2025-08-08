@@ -37,7 +37,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 </p>
 <br />
 <p>
-2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Expand the list next to image and Choose windows server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Review and create machine
+2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Expand the list next to image and choose windows server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Review and create machine.
 </p>
 <br />
 </p>
@@ -129,7 +129,7 @@ The server has the necessary software but it's not a DC yet.
 <br />
 <img src="https://imgur.com/U3itFYu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-9a. Next you will promote it as DC. After installation there will be a yellow exclamation point in the top right corner. Click on it then click the blue text, “Promote the server to a DC". ,This step begins the process of promoting the server so it can act as a Domain Controller, enabling it to manage authentication, DNS, and directory services across your environment.
+9a. Next you will promote it as DC. After installation there will be a yellow exclamation point in the top right corner. Click on it then click the blue text, “Promote the server to a DC". This step begins the process of promoting the server so it can act as a Domain Controller, enabling it to manage authentication, DNS, and directory services across your environment.
 
 </p>
 <br />
@@ -184,7 +184,7 @@ Click OK.
 <br />
 <img src="https://imgur.com/CKRc6hW.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 12. Create a new OU named “_ADMINS”
-On mydomain.com right click>new>Organizational Units. And name it _ADMINS. Refresh page and both should move up the list.
+On mydomain.com right click>New>Organizational Units. And name it _ADMINS. Refresh page and both should move up the list.
 </p>
 <br />
  </p>
@@ -193,7 +193,7 @@ On mydomain.com right click>new>Organizational Units. And name it _ADMINS. Refre
 <br />
 <img src="https://imgur.com/mMvnGd0.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 13. Create a new employee named “Jane Doe” with the username of “jane_admin”
-Click on the admins folder then on the empty space off to the right, right click>new>user. Name user “Jane Doe”. For the username type “Jane_Admin” click next and create a password. 
+Click on the admins folder then on the empty space off to the right, right click>New>User. Name user “Jane Doe”. For the username type “Jane_Admin” click next and create a password. 
 </p>
 <br />
  </p>
@@ -306,7 +306,7 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/1aS08zc.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>    
-23. When finished, Back in the server menu from DC In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC). open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>_EMPLOYEES). (Right click and refresh, the page should start populating.)
+23. When finished, go back to the server menu from DC In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC). Open Active Directory Users Computer and observe the accounts in the appropriate OU Employees being created (ADUC>mydomain.com>_EMPLOYEES). (Right click and refresh, the page should start populating.)
 </p>
 <br />
 </p>
@@ -352,7 +352,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomain
 </p>
 <br />
 <img src="https://imgur.com/iHNlwPF.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
-28. Open up DC-1 and find the user again within the user’s list in ADUC>_Employees>Name> rightclick to properties>from general tab go to Account tab so you can click the unchecked box that says “Unlock Account” and hit ok
+28. Open up DC-1 and find the user again within the user’s list in ADUC>_Employees>Name> right click to Properties>General tab>Account then click the unchecked box that says “Unlock Account” and hit ok
 </p>
 <br />
 </p>
@@ -368,10 +368,10 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomain
 </p>
 <br />
 <img src="https://imgur.com/MWOsq3B.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
-30. You can also right click a name to disable an account . You can right click to re enable it. 
+30. You can also right click a name to disable an account. You can right click to re enable it. 
 </p>
 <br />
 30. Active Directory is a useful software for helping organize users and their permissions! Hopefully this gave you valuable insight on how
-Active Directory works! That is the end of this lab.
+Active Directory works! 
 
 
