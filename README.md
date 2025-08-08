@@ -29,20 +29,17 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 <h2>Create Resources</h2>
 
 <p>
+<br />
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- 
+<p>
+<br /> 
 1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create.
 </p>
 <br />
-</p>
-<br />
-<p>
 2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one). Expand the list next to image and choose windows server 2022 and 2 CPUs. Create your Username and Password (My username will be LabUser), save it! Allow selected ports RDP only. Review and create machine.
 </p>
 <br />
 </p>
-<br />
-<p>
 <img src="https://imgur.com/R2Nwn9Z.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
 2a. After VM is created go to resource and go to the networking tab. Click on the blue font by IP configuration. Click on blue font ipconfig and within that set Domain Controller’s NIC Private IP address to be static then save.
@@ -69,13 +66,12 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 </p>
 <br />
 <h2>Ensure Connectivity between the Client and Domain Controller</h2>
-
+</p>
+<br />
 5. Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. Open command line and ping DC-1’s private IP address with "ping -t "<ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
 </p>
 <br />
 </p>
-<br />
-<p>
  <img src="https://imgur.com/nTbgxtT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
 6a. Login to the Domain Controller and enable ICMPv4 on the local windows Firewall, which is the protocol Ping uses. So RDP to DC’s public IP address, login with the username and password you made. In search bar at the bottom dash type firewall and click on windows defendant firewall.
@@ -93,7 +89,8 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 <br />
 <p>
  <img src="https://imgur.com/4REr85C.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- 
+<br />
+<p> 
 7. Go back to Client-1 where the continuous ping (ping -t <DC-1_private_IP>) was running.
 You’ll notice that the initial pings timed out — this was before ICMPv4 was enabled on the Domain Controller.
 As soon as the firewall rule was enabled on DC-1, successful ping replies should begin appearing.
@@ -157,9 +154,11 @@ create a DSRM(Directory Services Restore Mode) password! DSRM is a local-only ad
 </p>
 <br />
 <img src="https://imgur.com/x6TEu5r.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-On DC-1, open Server Manager.
+</p>
+<br />
+11. On DC-1, open Server Manager.
 
-11. In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC).
+In the top-right corner, click Tools, select Active Directory Users and Computers (ADUC).
 
 In the left-hand pane, expand your domain (e.g., mydomain.com).
 
@@ -295,9 +294,11 @@ You must restart to flush the DNS cache so that it can forget VMWare’s IP addr
 </p>
 <br />
 <img src="https://imgur.com/sfuq6ih.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-
+</p>
+<br />
 21b. Click “copy raw contents” on the githbub website to copy the whole script. It will create 10k accounts specified on line 3 and they will all have the same password specified on line 2. On line 43 the script specifies all accounts will be added in OU Employees. 
-
+</p>
+<br />
 22. Click run script (Green triangle underneath “Help” circled in step 22a) and it’ll start up.
 </p>
 <br />
@@ -371,7 +372,7 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomain
 30. You can also right click a name to disable an account. You can right click to re enable it. 
 </p>
 <br />
-30. Active Directory is a useful software for helping organize users and their permissions! Hopefully this gave you valuable insight on how
+Active Directory is a useful software for helping organize users and their permissions! Hopefully this gave you valuable insight on how
 Active Directory works! 
 
 
