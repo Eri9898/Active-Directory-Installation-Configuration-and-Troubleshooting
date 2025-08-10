@@ -68,7 +68,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 <h2>Ensure Connectivity between the Client and Domain Controller</h2>
 </p>
 <br />
-5. Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. Open command line and ping DC-1’s private IP address with "ping -t "<ip address> (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
+5. Login to Client-1 with Remote Desktop, search it's public IP and use the login you created. Open command line and ping DC-1’s private IP address with "ping -t " ip address (perpetual ping). The ping should fail because the firewall on the DC is blocking traffic! This test checks basic network connectivity from the client to the domain controller and security settings. 
 </p>
 <br />
 </p>
