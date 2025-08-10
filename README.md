@@ -6,16 +6,16 @@
 
 This tutorial creates a Windows Server environment using Microsoft Azure. A domain controller will be created and configured, a Windows client will be added to the domain, and Active Directory will be utilized to manage user accounts, permissions, and group policies. This walkthrough covers user provisioning, domain joins, firewall configs, DNS redirection, and remote access setup for domain users.<br /> 
 
-<h1>Skills Demonstrated</h1>
+<h1>Tutorial Outline</h1>
 
-- Provisioned and configured Azure VMs
-- Installed and promoted Windows Server to Domain Controller
-- Created and managed Users, Groups, and Organizational Units (OUs)
-- Joined a Client VM to a Domain
+- Provision and configure Azure VMs
+- Install and promote Windows Server to Domain Controller
+- Create and manage Users, Groups, and Organizational Units (OUs)
+- Join a Client VM to a Domain
 - Set static IP, DNS, and networking rules
-- Granted RDP access to Domain Users 
-- Unlocked/reset passwords via ADUC
-- Bulk created Users with Powershell script
+- Grant RDP access to Domain Users 
+- Unlock/reset passwords via ADUC
+- Bulk create Users with Powershell script
 
  
 <h2>Environments and Technologies Used</h2>
