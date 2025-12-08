@@ -33,10 +33,10 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 <img src="https://imgur.com/D3xi2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <p>
 <br /> 
-1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create.
+1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create. 
 </p>
 <br />
-2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one to prevent latency). Expand the list next to image and choose windows server 2022 and 2 CPUs. Create your Username and Password and save it! Allow selected ports RDP only. Review and create machine.
+2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one to prevent latency). Expand the list next to image and choose windows server 2022 and 2 CPUs. Create your Username and Password and save it! Configure the Windows Firewall to allow only necessary inbound traffic such as RDP, DNS, LDAP(S), and more. BLock anything that isn't necessary of course! Outbound rules should allow the same rules with the exception of RDP. Review and create machine.
 </p>
 <br />
 </p>
@@ -126,7 +126,7 @@ The server has the necessary software but it's not a DC yet.
 <br />
 <img src="https://imgur.com/U3itFYu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-9a. Next you will promote it as DC. After installation there will be a yellow exclamation point in the top right corner. Click on it then click the blue text, “Promote the server to a DC". This step begins the process of promoting the server so it can act as a Domain Controller, enabling it to manage authentication, DNS, and directory services across your environment.
+9a. Next you will promote it as DC. Before doing so, verify Windows Updates are installed to ensure the latest security patches for AD DS. After installation there will be a yellow exclamation point in the top right corner. Click on it then click the blue text, “Promote the server to a DC". This step begins the process of promoting the server so it can act as a Domain Controller, enabling it to manage authentication, DNS, and directory services across your environment.
 
 </p>
 <br />
@@ -136,7 +136,7 @@ The server has the necessary software but it's not a DC yet.
 <br />
 <img src="https://imgur.com/0EbGXnO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 9b. On the deployment configuration page select “Add a new forest”,  which is the top-level security boundary in Active Directory. Next create a root domain name, (mydomain.com). This is the first domain in the structure aka your root domain. click next to Domain Controller options and 
-create a DSRM(Directory Services Restore Mode) password! DSRM is a local-only administrator password used to log into a Domain Controller in Directory Services Restore Mode, typically for repairing or recovering Active Directory or the DC itself. Click next on DNS options, click next on additional notes. Then click next on review and click next on prerequisites, click install.
+create a DSRM (Directory Services Restore Mode) password! DSRM is a local-only administrator password used to log into a Domain Controller in Directory Services Restore Mode, typically for repairing or recovering Active Directory or the DC itself. Click next on DNS options, click next on additional notes. Then click next on review and click next on prerequisites, click install.
 </p>
 <br />
  </p>
@@ -235,7 +235,7 @@ The user is not an admin yet, in order for that to happen you must add the user 
 </p>
 <br />
 <img src="https://imgur.com/NhISrFO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. By default, Client-1 will use Azure’s default DNS, which won’t recognize your AD domain. Pointing Client 1's DNS to DC-1 ensures that Client-1 can join the domain successfully.
+17a. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address. This will join Client-1 to your domain mydomain.com. That way you can log onto Client 1 using the accounts you made in the DC. By default, Client-1 will use Azure’s default DNS, which won’t recognize your AD domain. Pointing Client 1's DNS to DC-1 ensures that Client-1 can join the domain successfully. Also confirm that the client’s outbound firewall allows DNS, Kerberos, LDAP, SMB, and RPC to the DC so domain join succeeds.
 </p>
 <br />
 </p>
@@ -372,7 +372,6 @@ RDP into Client one, and paste their name after “MyDomain.com\” (“MYDomain
 30. You can also right click a name to disable an account. You can right click to re enable it. 
 </p>
 <br />
-Active Directory is a useful software for helping organize users and their permissions! Hopefully this gave you valuable insight on how
-Active Directory works! 
+Active Directory is only the starting point! Once your domain controller is up, keep your environment healthy and secure. Regularly checking Windows Event Viewer helps you catch warnings, errors, and any sketchy access attempts before they turn into real problems. Always take snapshots or backups before making big configuration changes so you can roll back instantly if something breaks. Little habits like these keep your domain stable, secure, and easy to manage!
 
 
