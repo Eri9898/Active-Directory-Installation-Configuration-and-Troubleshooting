@@ -36,7 +36,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 1. Go to resource group and create a new group. You can name the resource group “AD-Lab". Review and create. 
 </p>
 <br />
-2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one to prevent latency). Expand the list next to image and choose windows server 2022 and 2 CPUs. Create your Username and Password and save it! Configure the Windows Firewall to allow only necessary inbound traffic such as RDP, DNS, LDAP(S), and more. BLock anything that isn't necessary of course! Outbound rules should allow the same rules with the exception of RDP. Review and create machine.
+2. Next create the Domain Controller VM (Windows Server 2022). Go to virtual machines, name the virtual machine “DC-1”. Choose a location (and make sure your next VM, "Client-1" has the same one to prevent latency). Expand the list next to image and choose windows server 2022 and 2 CPUs. Create your Username and Password and save it! Configure the Windows Firewall to allow only necessary inbound traffic such as RDP, DNS, LDAP/LDAPS, Kerberos, and SMB. Outbound rules can stay mostly open, with the exception of RDP. Review and create machine.
 </p>
 <br />
 </p>
