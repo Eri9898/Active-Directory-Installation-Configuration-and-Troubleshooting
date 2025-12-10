@@ -74,7 +74,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 </p>
  <img src="https://imgur.com/nTbgxtT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-6a. Login to the Domain Controller and enable ICMPv4 on the local windows Firewall, which is the protocol Ping uses. So RDP to DC’s public IP address, login with the username and password you made. In search bar at the bottom dash type firewall and click on windows defendant firewall.
+6a. Login to the Domain Controller and temporarily enable ICMPv4 on the local windows Firewall, which is the protocol Ping uses. We want to make sure the client can connect to the DC. So RDP to DC’s public IP address, login with the username and password you made. In search bar at the bottom dash type firewall and click on windows defendant firewall.
 </p>
 <br />
 </p>
@@ -82,8 +82,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 <p>
  <img src="https://imgur.com/fV0Hguk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
  
-6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the rules with that protocol
-</p>
+6b. Next click on inbound rules> protocol. Scroll down until you find ICMPv4, right click to enable all of the rules with that protocol.
 <br />
 </p>
 <br />
@@ -95,7 +94,7 @@ This tutorial creates a Windows Server environment using Microsoft Azure. A doma
 You’ll notice that the initial pings timed out — this was before ICMPv4 was enabled on the Domain Controller.
 As soon as the firewall rule was enabled on DC-1, successful ping replies should begin appearing.
 Press Ctrl + C to stop the ping.
-Now that the necessary resources are deployed and basic connectivity is confirmed, we can begin installing Active Directory Domain Services (AD DS) on the Domain Controller.
+Now that the necessary resources are deployed and basic connectivity is confirmed, we can disable the Ping rules and begin installing Active Directory Domain Services (AD DS) on the Domain Controller.
 </p>
 <br />
 <h1>Active Directory Installation</h1>
